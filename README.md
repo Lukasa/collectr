@@ -38,8 +38,8 @@ Of course, you can have quite a bit more control than that.
     statics.minifier = 'yuicompressor'
     statics.force_update = True
     statics.ignore = ['*.jpg', '*.json']
-    statics.update('bucket-name')
     statics.metadata = {'Cache-Control': 'max-age=3600'}
+    statics.update('bucket-name')
 
 ## Features
 
