@@ -9,8 +9,7 @@ This module contains the main models used by collectr.
 :license: MIT License, see LICENSE for details.
 
 """
-import os
-from .utils import VCS_DIRS
+from .utils import tree_walk
 
 
 class StaticDir(object):
@@ -69,16 +68,7 @@ class StaticDir(object):
         Enumerate all the files beneath this directory. Walks into all
         directories except for those created by version control.
         """
-        files = []
-
-        for dirpath, subdirs, filenames in os.walk(self.directory):
-            for name in filenames:
-                files.append(os.path.join(name, dirpath))
-
-            # Ignore version control directories.
-            for vcs_dir in VCS_DIRS:
-                if vcs_dir in subdirs:
-                    subdirs.remove(vcs_dir)
+        files = tree_walk(self.directory)
 
         # Ignore some files.
         self.filter_files(files)

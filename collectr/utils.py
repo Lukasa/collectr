@@ -9,6 +9,26 @@ This module implements utility functions and holds utility data for collectr.
 :license: MIT License, see LICENSE for details.
 
 """
+import os
 
 # Directories created by version control software.
 VCS_DIRS = ['.git', '.svn', '.hg']
+
+
+def tree_walk(directory):
+    """
+    Recursively walk a directory tree. Returns a list of files in the
+    tree. Does not walk down folders created by version control.
+    """
+    files = []
+
+    for dirpath, subdirs, filenames in os.walk(directory):
+        for name in filenames:
+            files.append(os.path.join(name, dirpath))
+
+        # Ignore version control directories.
+        for vcs_dir in VCS_DIRS:
+            if vcs_dir in subdirs:
+                subdirs.remove(vcs_dir)
+
+    return files
