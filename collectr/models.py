@@ -16,9 +16,12 @@ class StaticDir(object):
     This class represents a single directory or directory tree of static files.
     This class can be created by the user, or used internally in collectr.
 
-    :param dir: The root of the directory tree.
+    :param directory: The root of the directory tree.
     """
-    def __init__(self, dir):
+    def __init__(self, directory):
+        #: The root of the directory tree.
+        self.directory = directory
+
         #: A string representing the location of static files that have yet to
         #: be minified. Files in this directory will be minified, and the
         #: minified versions will be saved to 'dir'.
