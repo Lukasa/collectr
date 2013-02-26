@@ -19,4 +19,4 @@ class StaticDir(object):
     :param dir: The root of the directory tree.
     """
     def __init__(self, dir):
-        raise NotImplemented("Not yet implented.")
+        raise NotImplementedError("Not yet implemented.")

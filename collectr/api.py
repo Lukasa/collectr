@@ -21,4 +21,4 @@ def update(dir, bucket):
     :param dir: the root of the directory tree.
     :param bucket: the name of the S3 bucket to use.
     """
-    raise NotImplemented("Not yet implemented.")
+    raise NotImplementedError("Not yet implemented.")
