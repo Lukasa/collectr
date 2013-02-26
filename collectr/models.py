@@ -47,3 +47,10 @@ class StaticDir(object):
         #: should be applied to the files. This metadata will be applied to
         #: _all_ the files found by this :class:`StaticDir <StaticDir>`.
         self.metadata = {}
+
+    def update(self, bucket_name):
+        """
+        Connect to S3 and update the bucket with the static files from the
+        directory.
+        """
+        raise NotImplementedError("Not implemented.")
