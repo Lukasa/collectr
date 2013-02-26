@@ -53,4 +53,11 @@ class StaticDir(object):
         Connect to S3 and update the bucket with the static files from the
         directory.
         """
-        raise NotImplementedError("Not implemented.")
+        # Non-destructive parts first.
+        files = self.enumerate_files()
+        conn = self.connect_s3()
+
+        # Now that we know we have a connection, begin the destructive parts.
+        files = self.minify_files(files)
+        self.upload_files(files)
+        return
