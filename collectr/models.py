@@ -61,17 +61,19 @@ class StaticDir(object):
         :param bucket_name: The name of the S3 bucket to upload to.
         """
         self.minify_files()
-        files = self.enumerate_files()
+        files = self.enumerate_files(self.directory)
         conn = self.connect_s3()
-        self.upload_files(files)
+        self.upload_files(files, conn)
         return
 
-    def enumerate_files(self):
+    def enumerate_files(self, directory):
         """
-        Enumerate all the files beneath this directory. Walks into all
+        Enumerate all the files beneath a directory. Walks into all
         directories except for those created by version control.
+
+        :param directory: The root of the tree.
         """
-        files = tree_walk(self.directory)
+        files = tree_walk(directory)
 
         # Ignore some files.
         files = self.filter_files(files)
