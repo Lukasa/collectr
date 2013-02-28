@@ -57,6 +57,8 @@ class StaticDir(object):
         """
         Connect to S3 and update the bucket with the static files from the
         directory.
+
+        :param bucket_name: The name of the S3 bucket to upload to.
         """
         self.minify_files()
         files = self.enumerate_files()
