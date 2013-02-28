@@ -32,3 +32,16 @@ def tree_walk(directory):
                 subdirs.remove(vcs_dir)
 
     return files
+
+
+def match_regexes(regexes, string):
+    """
+    Given a string, determine if it matches any of a list of regular
+    expressions. Returns True if it does, False if it doesn't.
+    """
+    match = [regex.search(string) for regex in regexes if regex.search(string)]
+
+    if match:
+        return True
+    else:
+        return False

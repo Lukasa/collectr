@@ -9,7 +9,8 @@ This module contains the main models used by collectr.
 :license: MIT License, see LICENSE for details.
 
 """
-from .utils import tree_walk
+from .utils import tree_walk, match_regexes
+import re
 
 
 class StaticDir(object):
@@ -72,5 +73,19 @@ class StaticDir(object):
 
         # Ignore some files.
         self.filter_files(files)
+
+        return files
+
+    def filter_files(self, files):
+        """
+        Given a list of files, remove any that match any of a list of regular
+        expressions.
+        """
+        tests = [re.compile(x) for x in self.ignore]
+
+        # Bail early if we don't have any regexes to match.
+        if tests:
+            # Remove files that are matched by regexes.
+            files = [name for name in files if not match_regexes(tests, name)]
 
         return files
