@@ -74,7 +74,7 @@ class StaticDir(object):
         files = tree_walk(self.directory)
 
         # Ignore some files.
-        self.filter_files(files)
+        files = self.filter_files(files)
 
         return files
 
