@@ -44,7 +44,7 @@ class StaticDir(object):
         #: variables, {in_name} and {out_name}. These refer to the input and
         #: output filename respectively. The string must be able to have
         #: .format() called on it.
-        self.minifier = {'css': None, 'js': None}
+        self.minifier = {}
 
         #: Whether to update all files, regardless of whether they have been
         #: changed.
