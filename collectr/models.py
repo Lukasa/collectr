@@ -15,6 +15,8 @@ from .exceptions import MinifierError
 import re
 import subprocess
 from boto.s3.connection import S3Connection
+from boto.exceptions import S3ResponseError
+from boto.s3.key import Key
 
 
 class StaticDir(object):
@@ -68,7 +70,7 @@ class StaticDir(object):
         self.minify_files()
         files = self.enumerate_files(self.directory)
         conn = self.connect_s3()
-        self.upload_files(files, conn)
+        self.upload_files(files, bucket_name, conn)
         return
 
     def enumerate_files(self, directory):
@@ -155,3 +157,27 @@ class StaticDir(object):
         Connect to S3. Returns the boto connection object.
         """
         return S3Connection()
+
+    def upload_files(self, files, bucket_name, connection):
+        """
+        Given a list of files, an Amazon S3 bucket and a connection, uploads
+        the files to the bucket. If the bucket doesn't exist, creates it.
+        """
+        # First get the bucket. If it exists, great. If not, create it.
+        try:
+            bucket = connection.get_bucket(bucket_name)
+        except S3ResponseError:
+            bucket = connection.create_bucket(bucket_name)
+
+        # For each file, create an S3 key and upload the data. Then, set the
+        # metadata.
+        for name in files:
+            key = Key(bucket)
+            key.key = name
+            key.set_contents_from_filename(name)
+
+            for metakey, metavalue in self.metadata.iteritems():
+                key.set_metadata(metakey, metavalue)
+
+        # All done.
+        return
