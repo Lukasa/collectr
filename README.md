@@ -35,7 +35,7 @@ Of course, you can have quite a bit more control than that.
     import collectr
     statics = collectr.StaticDir('path/to/static/files')
     statics.input_directory = 'path/to/other/dir'
-    statics.minifier = 'yuicompressor'
+    statics.minifier = 'yuicompressor -o {out_name} {in_name}'
     statics.force_update = True
     statics.ignore = ['*.jpg', '*.json']
     statics.metadata = {'Cache-Control': 'max-age=3600'}
