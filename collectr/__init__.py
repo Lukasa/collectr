@@ -19,3 +19,4 @@ __copyright__ = 'Copyright 2013 Cory Benfield'
 
 from .api import *
 from .models import StaticDir
+from . import exceptions

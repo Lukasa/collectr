@@ -9,8 +9,11 @@ This module contains the main models used by collectr.
 :license: MIT License, see LICENSE for details.
 
 """
-from .utils import tree_walk, match_regexes
+from .utils import (tree_walk, match_regexes, move_path, minified_filename,
+                    get_extension)
+from .exceptions import MinifierError
 import re
+import subprocess
 
 
 class StaticDir(object):
@@ -35,8 +38,9 @@ class StaticDir(object):
         #: Javascript and CSS files.
         #: If the dictionary is used, the keys correspond to a command-line to
         #: run. This should be a python format string with two string
-        #: variables, %{in}s and %{out}s. These refer to the input and output
-        #: filename respectively.
+        #: variables, {in_name} and {out_name}. These refer to the input and
+        #: output filename respectively. The string must be able to have
+        #: .format() called on it.
         self.minifier = {'css': None, 'js': None}
 
         #: Whether to update all files, regardless of whether they have been
@@ -93,3 +97,54 @@ class StaticDir(object):
             files = [name for name in files if not match_regexes(tests, name)]
 
         return files
+
+    def minify_files(self):
+        """
+        Takes all the files either in the main directory or the input directory
+        and minifies them. If the files came from the input directory, moves
+        them to the main directory.
+        """
+        if self.input_directory:
+            files = self.enumerate_files(self.input_directory)
+        else:
+            files = self.enumerate_files(self.directory)
+
+        # Strings are a special case: apply that special case.
+        if isinstance(self.minifier, basestring):
+            minifier = {'css': self.minifier, 'js': self.minifier}
+        else:
+            minifier = self.minifier
+
+        # For each file, if its extension has a minifier associated with it,
+        # apply it.
+        for name in files:
+            try:
+                command = minifier[get_extension(name)]
+                command = command.format(in_name=name,
+                                         out_name=self.get_output_name(name))
+
+                rc = subprocess.call(command, shell=True)
+
+                if rc != 0:
+                    raise MinifierError("Error occurred during minification.")
+
+            except KeyError:
+                # If there's no minifier command, don't touch it.
+                continue
+
+        return
+
+    def get_output_name(self, input_filename):
+        """
+        When minifying a file, determine its output filename. This depends on
+        whether it's being copied to a new directory.
+        """
+        if self.input_directory:
+            filename = move_path(self.input_directory,
+                                 self.directory,
+                                 input_filename)
+            filename = minified_filename(filename)
+        else:
+            filename = minified_filename(input_filename)
+
+        return filename
