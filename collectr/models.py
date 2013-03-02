@@ -14,6 +14,7 @@ from .utils import (tree_walk, match_regexes, move_path, minified_filename,
 from .exceptions import MinifierError
 import re
 import subprocess
+from boto.s3.connection import S3Connection
 
 
 class StaticDir(object):
@@ -148,3 +149,9 @@ class StaticDir(object):
             filename = minified_filename(input_filename)
 
         return filename
+
+    def connect_s3(self):
+        """
+        Connect to S3. Returns the boto connection object.
+        """
+        return S3Connection()

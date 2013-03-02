@@ -41,6 +41,10 @@ Of course, you can have quite a bit more control than that.
     statics.metadata = {'Cache-Control': 'max-age=3600'}
     statics.update('bucket-name')
 
+Before you do anything, though, make sure you have your environment variables
+set up. You'll need AWS\_ACCESS\_KEY\_ID and AWS\_SECRET\_ACCESS\_KEY set to
+the correct values.
+
 ## Features
 
 - Static file minification.
