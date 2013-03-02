@@ -9,7 +9,6 @@ This module implements the public-facing portion of the collectr API.
 :license: MIT License, see LICENSE for details.
 
 """
-
 from .models import StaticDir
 
 
@@ -21,4 +20,6 @@ def update(directory, bucket):
     :param directory: the root of the directory tree.
     :param bucket: the name of the S3 bucket to use.
     """
-    raise NotImplementedError("Not yet implemented.")
+    d = StaticDir(directory)
+    d.update(bucket)
+    return
