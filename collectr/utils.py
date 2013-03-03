@@ -58,7 +58,7 @@ def move_path(current_dir, new_dir, path):
     if new_dir[-1] != '/':
         new_dir += '/'
 
-    return string.replace(path, current_dir, new_dir, 1)
+    return path.replace(current_dir, new_dir, 1)
 
 
 def minified_filename(path):
