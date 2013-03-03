@@ -1,8 +1,8 @@
 #! /usr/bin/env python
 
-import collectr
 import sys
 import os
+import re
 
 try:
     from setuptools import setup
@@ -13,11 +13,20 @@ if sys.argv[-1] in ('submit', 'publish'):
     os.system('python setup.py sdist upload')
     sys.exit()
 
+__version__ = ''
+with open('collectr/__init__.py', 'r') as fd:
+    reg = re.compile(r'__version__ = [\'"]([^\'"]*)[\'"]')
+    for line in fd:
+        m = reg.match(line)
+        if m:
+            __version__ = m.group(1)
+            break
+
 packages = ['collectr']
 
 setup(
     name='collectr',
-    version=collectr.__version__,
+    version=__version__,
     description='Static file management for everyone.',
     long_description=open('README.rst').read(),
     author='Cory Benfield',
