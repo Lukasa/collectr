@@ -56,7 +56,6 @@ Features
 - Ignore filters.
 - Multiple directory management.
 - Metadata management.
-- Fire-and-forget configuration.
 
 Installation
 ------------
