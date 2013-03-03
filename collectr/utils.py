@@ -24,7 +24,7 @@ def tree_walk(directory):
 
     for dirpath, subdirs, filenames in os.walk(directory):
         for name in filenames:
-            files.append(os.path.join(name, dirpath))
+            files.append(os.path.join(dirpath, name))
 
         # Ignore version control directories.
         for vcs_dir in VCS_DIRS:
