@@ -11,7 +11,7 @@ more.
 """
 
 __title__ = 'collectr'
-__version__ = '0.0.3'
+__version__ = '0.0.4'
 __build__ = 0x000001
 __author__ = 'Cory Benfield'
 __license__ = 'MIT'
