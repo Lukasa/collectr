@@ -173,7 +173,7 @@ class StaticDir(object):
         # metadata.
         for name in files:
             key = Key(bucket)
-            key.key = name
+            key.key = name.replace(self.directory, '')
             key.set_contents_from_filename(name)
 
             for metakey, metavalue in self.metadata.iteritems():
