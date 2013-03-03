@@ -9,10 +9,9 @@ This module contains any exceptions raised by collectr.
 :license: MIT License, see LICENSE for details.
 
 """
-import subprocess
 
 
-class MinifierError(subprocess.CalledProcessError):
+class MinifierError(IOError):
     """
     An error encountered during execution of the minifier.
     """
