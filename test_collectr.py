@@ -30,6 +30,13 @@ class CollectrTest(unittest.TestCase):
         files = self.dir.enumerate_files('test/fixtures/dirA')
         self.assertEqual(files, result)
 
+    def test_enumerate_files_with_filter(self):
+        result = ['test/fixtures/dirB/img/img1.jpg',
+                  'test/fixtures/dirB/img/img3.tiff']
+        self.dir.ignore = ['.*\.png']
+        files = self.dir.enumerate_files('test/fixtures/dirB')
+        self.assertEqual(files, result)
+
 
 if __name__ == '__main__':
     unittest.main()
