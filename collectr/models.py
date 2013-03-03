@@ -10,7 +10,7 @@ This module contains the main models used by collectr.
 
 """
 from .utils import (tree_walk, match_regexes, move_path, minified_filename,
-                    get_extension)
+                    get_extension, default_minifier)
 from .exceptions import MinifierError
 import re
 import subprocess
@@ -44,7 +44,7 @@ class StaticDir(object):
         #: variables, {in_name} and {out_name}. These refer to the input and
         #: output filename respectively. The string must be able to have
         #: .format() called on it.
-        self.minifier = {}
+        self.minifier = default_minifier()
 
         #: Whether to update all files, regardless of whether they have been
         #: changed.

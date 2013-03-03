@@ -78,3 +78,11 @@ def get_extension(path):
     """
     _, extension = os.path.splitext(path)
     return extension[1:]
+
+
+def default_minifier():
+    """
+    Determine the default minifier dict.
+    """
+    # TODO: Come back and generalise this.
+    return 'yuicompressor -o {out_name} {in_name}'
