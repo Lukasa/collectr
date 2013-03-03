@@ -19,6 +19,9 @@ class CollectrTest(unittest.TestCase):
     def setUp(self):
         self.dir = collectr.StaticDir('test/fixtures/dirB')
 
+    def tearDown(self):
+        self.dir = None
+
     def test_enumerate_files(self):
         result = ['test/fixtures/dirA/css/css1.css',
                   'test/fixtures/dirA/css/css2.css',
