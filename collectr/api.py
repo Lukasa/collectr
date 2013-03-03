@@ -12,7 +12,7 @@ This module implements the public-facing portion of the collectr API.
 from .models import StaticDir
 
 
-def update(directory, bucket):
+def update(directory, bucket, input_directory=''):
     """
     Updates an S3 bucket with the contents of a directory tree. Mirrors the
     tree into the S3 bucket. Returns nothing.
@@ -21,5 +21,6 @@ def update(directory, bucket):
     :param bucket: the name of the S3 bucket to use.
     """
     d = StaticDir(directory)
+    d.input_directory = input_directory
     d.update(bucket)
     return
