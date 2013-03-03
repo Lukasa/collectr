@@ -1,8 +1,9 @@
-# collectr: Keep your S3 static files up to date.
+collectr: Keep your S3 static files up to date.
+===============================================
 
 More and more, we find ourselves storing our static website files - CSS,
-Javascript, images and more - on [Amazon S3](http://aws.amazon.com/s3/). Some
-of us do it because we use services like [Heroku](http://www.heroku.com/) and
+Javascript, images and more - on `Amazon S3 <http://aws.amazon.com/s3/>`_. Some
+of us do it because we use services like `Heroku <http://www.heroku.com/>`_ and
 don't want to force the static files through our web dynos. Others of us do it
 to avoid huge bandwidth costs associated with hosting these on our own servers.
 Still others do it to take advantage of the scale and distributed nature of S3.
@@ -12,15 +13,16 @@ to minify and reupload them. We also need to set all the metadata we want:
 things like Cache-Control headers. This can be boring and error-prone. collectr
 aims to help with that.
 
-## Using collectr
+Using collectr
+--------------
 
 collectr is a collection of functions built on top of the
-[boto](https://github.com/boto/boto) library. This allows you to plug collectr
-into any of your Python code however you see fit. For those who want a 'just
-works' solution, however, collectr also comes with an example script that is
-perfect for using with any Django project.
+`boto <https://github.com/boto/boto>`_ library. This allows you to plug
+collectr into any of your Python code however you see fit. For those who want a
+'just works' solution, however, collectr also comes with an example script that
+is perfect for using with any Django project.
 
-If you want simple, you can use collectr like this:
+If you want simple, you can use collectr like this::
 
     import collectr
     collectr.update('path/to/static/files', 'bucket-name')
@@ -32,6 +34,8 @@ metadata persisted.
 
 Of course, you can have quite a bit more control than that.
 
+::
+
     import collectr
     statics = collectr.StaticDir('path/to/static/files')
     statics.input_directory = 'path/to/other/dir'
@@ -42,10 +46,11 @@ Of course, you can have quite a bit more control than that.
     statics.update('bucket-name')
 
 Before you do anything, though, make sure you have your environment variables
-set up. You'll need AWS\_ACCESS\_KEY\_ID and AWS\_SECRET\_ACCESS\_KEY set to
+set up. You'll need AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY set to
 the correct values.
 
-## Features
+Features
+--------
 
 - Static file minification.
 - Ignore filters.
@@ -53,18 +58,20 @@ the correct values.
 - Metadata management.
 - Fire-and-forget configuration.
 
-## Installation
+Installation
+------------
 
-To install collectr:
+To install collectr::
 
     $ pip install collectr
 
-If you don't have `pip` and can't install it, you should complain to your
-sysadmin, and then do:
+If you don't have ``pip`` and can't install it, you should complain to your
+sysadmin, and then do::
 
     $ easy_install collectr
 
-## Contributing
+Contributing
+------------
 
 collectr welcomes contributions, both bug fixes and new features. Any feature
 request should strongly consider the implications for the API. API clarity
