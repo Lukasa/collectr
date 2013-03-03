@@ -47,6 +47,23 @@ class CollectrTest(unittest.TestCase):
         files = self.dir.enumerate_files('test/fixtures/dirB')
         self.assertEqual(files, result)
 
+    def test_minifier_works(self):
+        # Set up directory.
+        self.dir.input_directory = 'test/fixtures/dirA'
+        self.dir.minifier = {'js': 'yuicompressor -o {out_name} {in_name}',
+                             'css': 'yuicompressor -o {out_name} {in_name}'}
+        files = [('test/fixtures/dirA/css/css1.css', 'test/fixtures/dirB/css/css1-min.css'),
+                 ('test/fixtures/dirA/css/css2.css', 'test/fixtures/dirB/css/css2-min.css'),
+                 ('test/fixtures/dirA/js/script1.js', 'test/fixtures/dirB/js/script1-min.js'),
+                 ('test/fixtures/dirA/js/script2.js', 'test/fixtures/dirB/js/script2-min.js')]
+
+        self.dir.minify_files()
+
+        for infile, outfile in files:
+            command_line = 'yuicompressor -o {out_name} {in_name}'.format(
+                                                              out_name=outfile,
+                                                              in_name=infile)
+            subprocess.call.assert_any_call(command_line, shell=True)
 
 if __name__ == '__main__':
     unittest.main()
