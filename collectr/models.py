@@ -179,5 +179,8 @@ class StaticDir(object):
             for metakey, metavalue in self.metadata.iteritems():
                 key.set_metadata(metakey, metavalue)
 
+            # Set the visibility to public-read.
+            key.set_acl('public-read')
+
         # All done.
         return
