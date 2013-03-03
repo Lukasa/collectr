@@ -66,7 +66,7 @@ def minified_filename(path):
     Given a path, returns a new path with the filename changed to a minified
     form, e.g. test.css -> test-min.css
     """
-    name, extension = os.path.splittext(path)
+    name, extension = os.path.splitext(path)
     name += "-min"
     return name + extension
 
@@ -76,5 +76,5 @@ def get_extension(path):
     Given a path, returns the extension, excluding the dot, e.g. test.css ->
     css.
     """
-    _, extension = os.path.splittext(path)
-    return path[1:]
+    _, extension = os.path.splitext(path)
+    return extension[1:]
