@@ -15,7 +15,7 @@ from .exceptions import MinifierError
 import re
 import subprocess
 from boto.s3.connection import S3Connection
-from boto.exceptions import S3ResponseError
+from boto.exception import S3ResponseError
 from boto.s3.key import Key
 
 
