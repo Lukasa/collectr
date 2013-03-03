@@ -22,6 +22,12 @@ class CollectrTest(unittest.TestCase):
     def tearDown(self):
         self.dir = None
 
+        try:          # Delete the files if they exist, otherwise mask failure.
+            self.old_call('rm -rf test/fixtures/dirB/css')
+            self.old_call('rm -rf test/fixtures/dirB/js')
+        except OSError:
+            pass
+
     def test_enumerate_files(self):
         result = ['test/fixtures/dirA/css/css1.css',
                   'test/fixtures/dirA/css/css2.css',
