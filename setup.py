@@ -32,6 +32,7 @@ setup(
     author='Cory Benfield',
     author_email='cory@lukasa.co.uk',
     url='http://www.lukasa.co.uk/',
+    scripts=['scripts/collect_static'],
     packages=packages,
     package_data={'': ['LICENSE']},
     package_dir={'collectr': 'collectr'},

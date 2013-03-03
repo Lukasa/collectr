@@ -1,0 +1,37 @@
+#! /usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+collect_static
+--------------
+
+A very basic script that uses collectr to manage static files. This is more
+intended as an example implementation than for proper use. It does no error
+checking of any kind.
+"""
+import collectr
+from argparse import ArgumentParser
+
+
+def do_argument_parsing():
+    """
+    Parse the command-line arguments.
+    """
+    parse = ArgumentParser(description='Minify and upload static files to S3.')
+    parse.add_argument('dir', help='the folder to upload to S3')
+    parse.add_argument('bucket',
+                       help='the name of the S3 bucket to upload to')
+    parse.add_argument('-m', '--mindir', default='',
+                       help='the directory of any files that need minifying')
+    return parse.parse_args()
+
+
+def main(directory, bucket, input_directory):
+    """
+    The main function.
+    """
+    collectr.update(directory, bucket, input_directory=input_directory)
+
+
+if __name__ == '__main__':
+    args = do_argument_parsing()
+    main(args.dir, args.bucket, args.mindir)
