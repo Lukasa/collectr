@@ -10,6 +10,8 @@ Some functions to test the collectr library.
 """
 import unittest
 import collectr
+import subprocess
+import mock
 
 
 class CollectrTest(unittest.TestCase):
@@ -17,6 +19,8 @@ class CollectrTest(unittest.TestCase):
     Tests for the collectr library.
     """
     def setUp(self):
+        self.old_call = subprocess.call
+        subprocess.call = mock.MagicMock(return_value=0)
         self.dir = collectr.StaticDir('test/fixtures/dirB')
 
     def tearDown(self):
