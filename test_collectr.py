@@ -59,5 +59,24 @@ class CollectrTest(unittest.TestCase):
                                                               in_name=infile)
             subprocess.call.assert_any_call(command_line, shell=True)
 
+    def test_metadata_application(self):
+        # Set up some metadata.
+        self.dir.metadata = {'.*\.png': {'Key1': 'Val1',
+                                         'Key2': 'Val2'},
+                             'Key3': 'Val3'}
+
+        # First, test something that matches a regex.
+        key = mock.MagicMock(key='test.png')
+        self.dir.apply_metadata(key)
+        key.set_metadata.assert_any_call('Key1', 'Val1')
+        key.set_metadata.assert_any_call('Key2', 'Val2')
+        key.set_metadata_assert_any_call('Key3', 'Val3')
+
+        # Then test one that doesn't.
+        key = mock.MagicMock(key='test.jpg')
+        self.dir.apply_metadata(key)
+        key.set_metadata.assert_called_once_with('Key3', 'Val3')
+
+
 if __name__ == '__main__':
     unittest.main()

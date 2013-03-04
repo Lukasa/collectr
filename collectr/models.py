@@ -184,3 +184,23 @@ class StaticDir(object):
 
         # All done.
         return
+
+    def apply_metadata(self, key):
+        """
+        Apply any expected metadata to an S3 key. If the value is a dict, the
+        key is treated as a regular expression that must match the file path.
+        Otherwise, the key and value are applied to all keys.
+        """
+        for metakey, metavalue in self.metadata.iteritems():
+
+            # If the value is a dict and the regex matches, apply all the key-
+            # value pairs.
+            if isinstance(metavalue, dict) and re.search(metakey, key.key):
+                for newkey, newvalue in metavalue.iteritems():
+                    key.set_metadata(newkey, newvalue)
+
+            # Otherwise, always apply the key and value.
+            elif not isinstance(metavalue, dict):
+                key.set_metadata(metakey, metavalue)
+
+        return
