@@ -28,7 +28,8 @@ setup(
     name='collectr',
     version=__version__,
     description='Static file management for everyone.',
-    long_description=open('README.rst').read(),
+    long_description=open('README.rst').read() + '\n\n' +
+                     open('HISTORY.rst'),
     author='Cory Benfield',
     author_email='cory@lukasa.co.uk',
     url='http://www.lukasa.co.uk/',
