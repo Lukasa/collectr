@@ -83,6 +83,25 @@ class CollectrTest(unittest.TestCase):
         result = self.dir.key_name_from_path(path)
         self.assertEqual(result, expected_result)
 
+    @mock.patch('boto.s3.key.Key')
+    def test_find_or_create_key(self, mock_key):
+        # Set up.
+        instance = mock_key.return_value
+        instance.key = 'test_key'
+        bucket = mock.MagicMock()
+        bucket.lookup.return_value = None
+
+        # First, test when we can't find the key.
+        result = self.dir.find_or_create_key('/test', bucket)
+        bucket.lookup.assert_called_once_with('/test')
+        self.assertEqual(result.key, '/test')
+
+        # Next, test when we can.
+        bucket.lookup.return_value = mock.MagicMock()
+        result = self.dir.find_or_create_key('/test', bucket)
+        bucket.lookup.assert_called_with('/test')
+        self.assertEqual(result.key, '/test')
+
 
 if __name__ == '__main__':
     unittest.main()
