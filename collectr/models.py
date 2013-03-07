@@ -205,6 +205,21 @@ class StaticDir(object):
 
         return
 
+    def find_or_create_key(self, path, bucket):
+        """
+        For a given file, checks whether it's in the S3 bucket. If it is,
+        returns the key object corresponding to it. If not, creates a new key
+        and returns it.
+        """
+        name = self.key_name_from_path(path)
+        key = bucket.lookup(name)
+
+        if not key:
+            key = Key(bucket)
+            key.key = name
+
+        return key
+
     def key_name_from_path(self, path):
         """
         Get the name of an S3 key from the path on the filesystem.
