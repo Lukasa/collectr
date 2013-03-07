@@ -204,3 +204,14 @@ class StaticDir(object):
                 key.set_metadata(metakey, metavalue)
 
         return
+
+    def key_name_from_path(self, path):
+        """
+        Get the name of an S3 key from the path on the filesystem.
+        """
+        if self.directory[-1] != '/':
+            temp_directory = self.directory + '/'
+        else:
+            temp_directory = self.directory
+
+        return path.replace(temp_directory, '', 1)

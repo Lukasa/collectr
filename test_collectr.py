@@ -77,6 +77,12 @@ class CollectrTest(unittest.TestCase):
         self.dir.apply_metadata(key)
         key.set_metadata.assert_called_once_with('Key3', 'Val3')
 
+    def test_key_name_from_path(self):
+        path = 'test/fixtures/dirB/dir/notherdir/name.extension'
+        expected_result = 'dir/notherdir/name.extension'
+        result = self.dir.key_name_from_path(path)
+        self.assertEqual(result, expected_result)
+
 
 if __name__ == '__main__':
     unittest.main()
