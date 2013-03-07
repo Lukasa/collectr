@@ -10,7 +10,7 @@ This module contains the main models used by collectr.
 
 """
 from .utils import (tree_walk, match_regexes, move_path, minified_filename,
-                    get_extension, default_minifier)
+                    get_extension, default_minifier, should_update_key)
 from .exceptions import MinifierError
 import re
 import subprocess
@@ -173,13 +173,15 @@ class StaticDir(object):
         # metadata.
         for path in files:
             key = self.find_or_create_key(path)
-            key.set_contents_from_filename(path)
 
-            for metakey, metavalue in self.metadata.iteritems():
-                key.set_metadata(metakey, metavalue)
+            if self.force_update or should_update_key(key, path):
+                key.set_contents_from_filename(path)
 
-            # Set the visibility to public-read.
-            key.set_acl('public-read')
+                for metakey, metavalue in self.metadata.iteritems():
+                    key.set_metadata(metakey, metavalue)
+
+                # Set the visibility to public-read.
+                key.set_acl('public-read')
 
         # All done.
         return

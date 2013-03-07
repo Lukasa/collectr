@@ -10,6 +10,7 @@ This module implements utility functions and holds utility data for collectr.
 
 """
 import os
+import time
 
 # Directories created by version control software.
 VCS_DIRS = ['.git', '.svn', '.hg']
@@ -86,3 +87,19 @@ def default_minifier():
     """
     # TODO: Come back and generalise this.
     return 'yuicompressor -o {out_name} {in_name}'
+
+
+def should_update_key(key, path):
+    """
+    Given a key and its associated file, determine whether it should be
+    updated.
+    """
+    # First, if there's no modification date, it must be new.
+    if not key.last_modified:
+        return True
+
+    key_time = time.strptime(key.last_modified,
+                             "%a, %d %b %Y %H:%M:%S %Z")
+    local_time = time.gmtime(os.path.getmtime(path))
+
+    return key_time == local_time
