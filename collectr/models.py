@@ -171,10 +171,9 @@ class StaticDir(object):
 
         # For each file, create an S3 key and upload the data. Then, set the
         # metadata.
-        for name in files:
-            key = Key(bucket)
-            key.key = name.replace(self.directory, '', 1)
-            key.set_contents_from_filename(name)
+        for path in files:
+            key = self.find_or_create_key(path)
+            key.set_contents_from_filename(path)
 
             for metakey, metavalue in self.metadata.iteritems():
                 key.set_metadata(metakey, metavalue)
