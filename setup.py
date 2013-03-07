@@ -29,7 +29,7 @@ setup(
     version=__version__,
     description='Static file management for everyone.',
     long_description=open('README.rst').read() + '\n\n' +
-                     open('HISTORY.rst'),
+                     open('HISTORY.rst').read(),
     author='Cory Benfield',
     author_email='cory@lukasa.co.uk',
     url='http://www.lukasa.co.uk/',
