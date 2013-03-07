@@ -1,6 +1,11 @@
 History
 -------
 
+0.0.5 (2013-03-07)
+++++++++++++++++++
+- More detailed metadata handling.
+- Only update if needed or forced.
+
 0.0.4 (2013-03-03)
 ++++++++++++++++++
 - Fix key names including the whole path.
